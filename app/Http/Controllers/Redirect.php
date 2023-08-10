@@ -70,11 +70,17 @@ class Redirect extends Controller
         if(count($allProductsByCurrentUser) > 0) {
             $theUserBoughtTheProduct = true;
         }
+        $price = $allInfo->price;
+        $event = Event::where("product_id", $allInfo->id)->first();
+        if($event) {
+            $price = $allInfo->price - ($allInfo->price * $event->procentage) / 100;
+        }
 
         return view("certain_product", [
             "info" => $allInfo,
             "reviews" => $allReviws,
-            "bought" => $theUserBoughtTheProduct
+            "bought" => $theUserBoughtTheProduct,
+            "price" => $price
         ]);
     }
     public function toCart() {
@@ -83,12 +89,23 @@ class Redirect extends Controller
             $products = [];
             foreach ($allCarts as $cart) {
                 $product = Products::where("id", $cart->product_id)->first();
+                $event = Event::where("product_id", $cart->product_id)->first();
+                $price = $product->price;
+                $isEvent = false;
+                $discount = 0;
+                if($event) {
+                    $price = $product->price - ($product->price * $event->procentage) / 100;
+                    $isEvent = true;
+                    $discount = $event->procentage;
+                }
                 $products[] = [
                     "name" => $product->name,
                     "description" => $product->description,
-                    "price" => $product->price,
+                    "price" => $price,
                     "image_path" => $product->image_path,
-                    "id" => $product->id
+                    "id" => $product->id,
+                    "isEvent" => $isEvent,
+                    "discount" => $discount
                 ];
             }
             $_SESSION["cart"] = $products;

@@ -19,9 +19,9 @@
         </div>
         <div style="width: 50%; height: 100%; display: flex; justify-content: center; align-items: center">
             <div style="padding: 20px; color: white;" class="buttons-info">
-                <p style="font-size: 40px; margin: 0">Price: {{ $info->price }}</p>
+                <p style="font-size: 40px; margin: 0">Price: ${{ $price }}</p>
                 <a href="/cart/add-to-cart/{{ $info->name }}"><button style="padding: 15px 40px; background-color: #2563eb; color: white; cursor: pointer">Add to Cart</button></a>
-                <button style="padding: 15px 40px; background-color: #49a62c; color: white; cursor: pointer">Buy</button>
+                <a href="/cart"><button style="padding: 15px 40px; background-color: #49a62c; color: white; cursor: pointer">Buy</button></a>
             </div>
         </div>
     </div>

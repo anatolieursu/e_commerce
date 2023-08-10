@@ -23,6 +23,9 @@
                                 <img style="width: 300px" src="{{ $product['image_path'] }}" alt="{{ $product["image_path"] }}">
                             </div>
                             <div style="margin-left: 20px;">
+                                @if($product["isEvent"])
+                                    <p>---DISCOUNT <del>{{ $product["discount"] }}% OFF</del>!---</p>
+                                @endif
                                 <p>Product Name: {{ $product["name"] }}</p>
                                 <p>Description: {{ $product["description"] }}</p>
                                 <div>
